@@ -27,12 +27,13 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Deploy') {
-            when {
-                expression { env.GIT_BRANCH == "origin/main" }
-            }
+        stage('Docker build') {
+
             steps {
-                sh 'echo This is Deploy'
+                sh """
+                docker build -t joindevops/backend:${appVarsion}
+                docker images
+                """
             }
         }
     }
