@@ -10,6 +10,11 @@ pipeline {
     environment {
         DEBUG = 'true'
         appVersion = ''
+        region = 'us-east-1'
+        account_id = '361769594412'
+        project = 'expense'
+        environment = 'dev'
+        component = 'backend'
     }
 
     stages {
@@ -30,9 +35,15 @@ pipeline {
         stage('Docker build') {
 
             steps {
+
                 sh """
-                docker build -t joindevops/backend:${appVersion} .
+                aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.us-east-1.amazonaws.com
+                
+                docker build -t ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${appVersion} .
+
                 docker images
+                
+                docker push ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project}/${environment}/${component}:${appVersion} .
                 """
             }
         }
