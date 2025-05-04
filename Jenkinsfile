@@ -11,7 +11,7 @@ pipeline {
         DEBUG = 'true'
         appVersion = ''
         region = 'us-east-1'
-        account_id = '361769594412'
+        account_id = '932478401603'
         project = 'expense'
         environment = 'dev'
         component = 'backend'
@@ -26,11 +26,6 @@ pipeline {
                     echo "App version: ${appVersion}"
                 }
             }   
-        }  
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
         }
         stage('Docker build') {
 
